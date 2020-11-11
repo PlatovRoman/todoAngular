@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-/*import { TASKS } from '../tasks';*/
-import {TasksINPComponent} from './../tasks-inp/tasks-inp.component';
 import {DateTransService} from '../date-trans.service';
 import {Task} from '../task';
 

@@ -1,14 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Task} from '../task';
 import {DateTransService} from '../date-trans.service';
-/*import { Task } from '../task';*/
-/*import { TASKS } from '../tasks';*/
-
-/*class ITask {
-  tasksName: string;
-  taskPriority: string;
-  taskIsOk: boolean;
-}*/
 
 @Component({
   selector: 'app-tasks-inp',
