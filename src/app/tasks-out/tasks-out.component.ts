@@ -23,12 +23,22 @@ export class TasksOUTComponent implements OnInit {
       this.tasks.push(this.handleTask(task));
       console.log(this.tasks);
     });
+
+    this.dateTrans.sort.subscribe((sort: boolean) => {
+      this.tasks.reverse();
+      console.log(this.tasks);
+    });
   }
 
   private handleTask(task: Task): Task {
+    const time = new Date().toLocaleTimeString('ru-RU', { timeZone: 'Europe/Moscow' });
+    const date = new Date().toLocaleDateString('ru-RU', { timeZone: 'Europe/Moscow' });
+    console.log(time);
+    console.log(date);
     return {
       ...task,
-      taskId: this.tasks.length + 1,
+      taskId: this.tasks.length,
+      taskTimeCreate: 'Time: ' + time + '⌚ Date: ' + date,
     };
   }
 }

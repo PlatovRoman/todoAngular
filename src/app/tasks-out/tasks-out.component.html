@@ -1,7 +1,16 @@
 <h2>My Tasks</h2>
 <ul>
-
+  <div id="out" class="div">
   <li *ngFor="let task of tasks">
    {{task.tasksName}} {{task.taskPriority}} {{task.taskIsOk}}
+    <p>
+      {{task.taskTimeCreate}}
+    </p>
+    <p>
+    <button id="ok">OK</button>
+    <button id="no">NO</button>
+    <button id="delete">DELETE</button>
+    </p>
   </li>
+  </div>
 </ul>

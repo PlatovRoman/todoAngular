@@ -6,17 +6,22 @@ import {BehaviorSubject, Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class DateTransService {
- /* public tasksSubject = new BehaviorSubject<Task[]>(null);*/
+  /* public tasksSubject = new BehaviorSubject<Task[]>(null);*/
   public task = new Subject<Task>();
+  public sort = new Subject<boolean>();
 
   constructor() {
   }
 
- /* public fillTasks() {
-    this.tasksSubject.next(TASKS);
-  }*/
+  /* public fillTasks() {
+     this.tasksSubject.next(TASKS);
+   }*/
 
   public addTask(task: Task): void {
     this.task.next(task);
+  }
+
+  public clickSort(sort: boolean): void {
+    this.sort.next(sort);
   }
 }

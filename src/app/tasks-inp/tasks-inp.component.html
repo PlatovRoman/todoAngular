@@ -1,13 +1,13 @@
-<p>
-  <input type="text" size="47" [(ngModel)]="taskName" placeholder="Add new task..." id="input" autofocus>
+<p [formGroup]="myForm">
+  <input type="text" size="47" formControlName="taskName" placeholder="Add new task..." id="input" autofocus>
 
-  <select id="slt" [(ngModel)]="taskPriority">
+  <select id="slt" formControlName="taskPriority">
     <option value="high">High</option>
     <option value="normal">Normal</option>
     <option value="low">Low</option>
   </select>
 
-  <button id="add" (click)="onClickAdd()">Add</button> <!--(click)="onClickAdd()"-->
+  <button id="add" [disabled]="!inputControl.valid" (click)="onClickAdd()">Add</button>
 </p>
 
 <p>
@@ -16,5 +16,5 @@
   <input type="checkbox" id="normal" name="normal" value="normal">Normal
   <input type="checkbox" id="low" name="low" value="low">Low
 
-  <button id="filterDate">Sort by date</button>
+  <button id="filterDate" (click)="onClickSort()">Sort by date</button>
 </p>
