@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Task} from '../task';
+import {FilterStat} from '../filterStat';
 import {DateTransService} from '../date-trans.service';
 
 import {FormGroup, FormControl, Validators} from '@angular/forms';
@@ -11,33 +12,40 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 })
 export class TasksINPComponent implements OnInit {
 
-  myForm: FormGroup = new FormGroup({
+  FormTaskNameAndPtiority: FormGroup = new FormGroup({
     'taskName': new FormControl('', Validators.required),
     'taskPriority': new FormControl('high'),
   });
 
-  /*taskName: string;
-  taskPriority: string = 'high';*/
+  FormFilterStat: FormGroup = new FormGroup({
+    'completed': new FormControl(false),
+    'high': new FormControl(false),
+    'normal': new FormControl(false),
+    'low': new FormControl(false)
+  });
 
   constructor(private dateTrans: DateTransService) {
-
   }
 
   ngOnInit(): void {
   }
 
-
-
   public get inputControl(): FormControl {
-      return this.myForm.get('taskName') as FormControl;
-    }
+    return this.FormTaskNameAndPtiority.get('taskName') as FormControl;
+  }
+
   public onClickAdd(): void {
-    const task: Task = new Task(this.myForm.controls['taskName'].value, this.myForm.controls['taskPriority'].value, false);
+    const task: Task = new Task(this.FormTaskNameAndPtiority.controls['taskName'].value, this.FormTaskNameAndPtiority.controls['taskPriority'].value, false);
     this.dateTrans.addTask(task);
-    this.myForm.controls['taskName'].reset('');
+    this.FormTaskNameAndPtiority.controls['taskName'].reset('');
   }
 
   public onClickSort(): void {
     this.dateTrans.clickSort(true);
+  }
+
+  public onClickCheck(): void {
+    const filterStat: FilterStat = new FilterStat(this.FormFilterStat.controls['completed'].value, this.FormFilterStat.controls['high'].value, this.FormFilterStat.controls['normal'].value, this.FormFilterStat.controls['low'].value);
+    this.dateTrans.changeFilterStat(filterStat);
   }
 }
