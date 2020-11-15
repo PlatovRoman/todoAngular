@@ -9,7 +9,8 @@ import {FilterStat} from '../filterStat';
   styleUrls: ['./tasks-out.component.css']
 })
 export class TasksOUTComponent implements OnInit {
-
+  // todo До сих пор не понимаю смысла использования классов при работе с простыми объектами
+  // todo Интерфейс не требует описания конструктора - по сути здесь бесполезного, не требует инициализации через new, что сокращает код
   public tasks: Task[] = [];
 
   public filterStatus: FilterStat = {
@@ -18,7 +19,10 @@ export class TasksOUTComponent implements OnInit {
     isNormal: false,
     isLow: false
   };
-
+  // todo !!!!!!!!!!!!
+  // todo лучше все же избавиться от tasksFiltered, вызывает много повторного использования кода (generateTasksFiltered)
+  // todo подумай сам как, если не получится, завтра разберём
+  // todo !!!!!!!!!!!!
   public tasksFiltered: Task[] = [];
 
   constructor(private dateTrans: DateTransService) {
@@ -39,6 +43,7 @@ export class TasksOUTComponent implements OnInit {
     });
 
     this.dateTrans.filterStat.subscribe((filterStat: FilterStat) => {
+      // todo зачем хранить состояние фильтра в отдельной переменной?
       this.filterStatus = filterStat;
       this.generateTasksFiltered();
       // console.log(this.filterStatus);
@@ -46,6 +51,8 @@ export class TasksOUTComponent implements OnInit {
   }
 
   private handleTask(task: Task): Task {
+    // todo почему даты также нельзя проинициализировать в input? В этом и суть инпута, если уж так делать,
+    // todo что в него по максимуму должна быть вынесена логика ввода
     const time = new Date().toLocaleTimeString('ru-RU', {timeZone: 'Europe/Moscow'});
     const date = new Date().toLocaleDateString('ru-RU', {timeZone: 'Europe/Moscow'});
     // console.log(time);
