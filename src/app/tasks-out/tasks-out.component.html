@@ -1,7 +1,7 @@
 <h2>My Tasks</h2>
 <ul>
-  <div id="out" class="div">
-  <li *ngFor="let task of tasksFiltered">
+  <div id="out" class="div" *ngFor="let task of tasks">
+  <li *ngIf="task.taskVisible">
     {{task.taskPriority | uppercase}} {{task.tasksName}} Create: {{ task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm' }}
     <p *ngIf="task.taskTimeConfirm">
       Confirm: {{task.taskTimeConfirm | date: 'dd.MMM.yyyy, HH:mm' }}

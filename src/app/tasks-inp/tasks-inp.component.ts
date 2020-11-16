@@ -35,12 +35,31 @@ export class TasksINPComponent implements OnInit {
   }
 
   public onClickAdd(): void {
+    let help = false;
+    if (!this.FormFilterStat.get('isCompleted').value) {
+      if (this.FormFilterStat.get('isHigh').value && (this.FormTaskNameAndPtiority.get('taskPriority').value === 'high')) {
+        help = true;
+      }
+      if (this.FormFilterStat.get('isNormal').value && (this.FormTaskNameAndPtiority.get('taskPriority').value === 'normal')) {
+        help = true;
+      }
+      if (this.FormFilterStat.get('isLow').value && (this.FormTaskNameAndPtiority.get('taskPriority').value === 'low')) {
+        help = true;
+      }
+      if (!(this.FormFilterStat.get('isHigh').value || this.FormFilterStat.get('isNormal') || this.FormFilterStat.get('isLow'))) {
+        help = true;
+      }
+    }
     const task: Task = {
       tasksName: this.FormTaskNameAndPtiority.get('taskName').value,
       taskPriority: this.FormTaskNameAndPtiority.get('taskPriority').value,
       taskIsOk: false,
       taskTimeCreate: new Date(),
+      taskVisible: help,
     };
+
+    console.log(task);
+
     this.dateTrans.addTask(task);
     this.FormTaskNameAndPtiority.get('taskName').reset('');
   }

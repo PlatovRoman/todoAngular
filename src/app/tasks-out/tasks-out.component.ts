@@ -16,11 +16,6 @@ export class TasksOUTComponent implements OnInit {
     isNormal: false,
     isLow: false
   };
-  // todo !!!!!!!!!!!!
-  // todo лучше все же избавиться от tasksFiltered, вызывает много повторного использования кода (generateTasksFiltered)
-  // todo подумай сам как, если не получится, завтра разберём
-  // todo !!!!!!!!!!!!
-  public tasksFiltered: Task[] = [];
 
   constructor(private dateTrans: DateTransService) {
   }
@@ -29,18 +24,43 @@ export class TasksOUTComponent implements OnInit {
 
     this.dateTrans.task.subscribe((task: Task) => {
       this.tasks.push(this.handleTask(task));
-      this.generateTasksFiltered();
     });
 
     this.dateTrans.sort.subscribe((sort: boolean) => {
-      this.tasksFiltered.reverse();
+      this.tasks.reverse();
     });
 
     this.dateTrans.filterStat.subscribe((filterStat: FilterStat) => {
-      // todo зачем хранить состояние фильтра в отдельной переменной?
-      this.filterStatus = filterStat;
-      // todo !!!!!!!!!!!!!!!!!!!!!!!прокинуть(не совсем понимаю, зачем... тогда ломается логика остального)
-      this.generateTasksFiltered();
+      this.tasks.forEach((task) => {
+        task.taskVisible = false;
+        if (filterStat.isCompleted) {
+          if (task.taskIsOk && task.taskPriority === 'high' && filterStat.isHigh) {
+            task.taskVisible = true;
+          }
+          if (task.taskIsOk && task.taskPriority === 'normal' && filterStat.isNormal) {
+            task.taskVisible = true;
+          }
+          if (task.taskIsOk && task.taskPriority === 'low' && filterStat.isLow) {
+            task.taskVisible = true;
+          }
+          if (task.taskIsOk && !(filterStat.isHigh || filterStat.isNormal || filterStat.isLow)) {
+            task.taskVisible = true;
+          }
+        } else {
+          if (task.taskPriority === 'high' && filterStat.isHigh) {
+            task.taskVisible = true;
+          }
+          if (task.taskPriority === 'normal' && filterStat.isNormal) {
+            task.taskVisible = true;
+          }
+          if (task.taskPriority === 'low' && filterStat.isLow) {
+            task.taskVisible = true;
+          }
+          if (!(filterStat.isHigh || filterStat.isNormal || filterStat.isLow)) {
+            task.taskVisible = true;
+          }
+        }
+      });
     });
   }
 
@@ -48,41 +68,41 @@ export class TasksOUTComponent implements OnInit {
     return {
       ...task,
       taskId: this.tasks.length,
+     // taskVisible: this.generateTasksFiltered(this.filterStatus),
     };
   }
 
-  public generateTasksFiltered(): void {
-    this.tasksFiltered = [];
+  /*public generateTasksFiltered(filterStat: FilterStat): void {
     this.tasks.forEach((task) => {
-      if (this.filterStatus.isCompleted) {
-        if (task.taskIsOk && task.taskPriority === 'high' && this.filterStatus.isHigh) {
-          this.tasksFiltered.push(task);
+      if (filterStat.isCompleted) {
+        if (task.taskIsOk && task.taskPriority === 'high' && filterStat.isHigh) {
+          task.taskVisible = true;
         }
-        if (task.taskIsOk && task.taskPriority === 'normal' && this.filterStatus.isNormal) {
-          this.tasksFiltered.push(task);
+        if (task.taskIsOk && task.taskPriority === 'normal' && filterStat.isNormal) {
+          task.taskVisible = true;
         }
-        if (task.taskIsOk && task.taskPriority === 'low' && this.filterStatus.isLow) {
-          this.tasksFiltered.push(task);
+        if (task.taskIsOk && task.taskPriority === 'low' && filterStat.isLow) {
+          task.taskVisible = true;
         }
-        if (task.taskIsOk && !(this.filterStatus.isHigh || this.filterStatus.isNormal || this.filterStatus.isLow)) {
-          this.tasksFiltered.push(task);
+        if (task.taskIsOk && !(filterStat.isHigh || filterStat.isNormal || filterStat.isLow)) {
+          task.taskVisible = true;
         }
       } else {
-        if (task.taskPriority === 'high' && this.filterStatus.isHigh) {
-          this.tasksFiltered.push(task);
+        if (task.taskPriority === 'high' && filterStat.isHigh) {
+          task.taskVisible = true;
         }
-        if (task.taskPriority === 'normal' && this.filterStatus.isNormal) {
-          this.tasksFiltered.push(task);
+        if (task.taskPriority === 'normal' && filterStat.isNormal) {
+          task.taskVisible = true;
         }
-        if (task.taskPriority === 'low' && this.filterStatus.isLow) {
-          this.tasksFiltered.push(task);
+        if (task.taskPriority === 'low' && filterStat.isLow) {
+          task.taskVisible = true;
         }
-        if (!(this.filterStatus.isHigh || this.filterStatus.isNormal || this.filterStatus.isLow)) {
-          this.tasksFiltered.push(task);
+        if (!(filterStat.isHigh || filterStat.isNormal || filterStat.isLow)) {
+          task.taskVisible = true;
         }
       }
     });
-  }
+  }*/
 
   public onClickOk(id: number): void {
     this.tasks.forEach((task) => {
@@ -92,7 +112,7 @@ export class TasksOUTComponent implements OnInit {
         task.taskTimeCancel = null;
       }
     });
-    this.generateTasksFiltered();
+    //this.generateTasksFiltered();
   }
 
   public onClickNo(id: number): void {
@@ -103,7 +123,7 @@ export class TasksOUTComponent implements OnInit {
         task.taskTimeConfirm = null;
       }
     });
-    this.generateTasksFiltered();
+   // this.generateTasksFiltered();
   }
 
   public onClickDelete(id: number): void {
@@ -112,6 +132,6 @@ export class TasksOUTComponent implements OnInit {
         this.tasks.splice(index, 1);
       }
     });
-    this.generateTasksFiltered();
+   // this.generateTasksFiltered();
   }
 }
