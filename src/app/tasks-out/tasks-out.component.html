@@ -2,10 +2,12 @@
 <ul>
   <div id="out" class="div">
   <li *ngFor="let task of tasksFiltered">
-    {{task.taskPriority}} {{task.tasksName}} {{task.taskTimeCreate}}
-    <p>
-      {{task.taskTimeConfirm}}
-      {{task.taskTimeCancel}}
+    {{task.taskPriority}} {{task.tasksName}} {{ task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm' }}
+    <p *ngIf="task.taskTimeConfirm">
+      Confirm: {{task.taskTimeConfirm | date: 'dd.MMM.yyyy, HH:mm' }}
+    </p>
+    <p *ngIf="task.taskTimeCancel">
+      Cancel: {{task.taskTimeCancel | date: 'dd.MMM.yyyy, HH:mm' }}
     </p>
     <p>
     <button id="ok" (click)="onClickOk(task.taskId)">OK</button>

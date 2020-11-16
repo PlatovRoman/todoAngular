@@ -4,11 +4,11 @@ export class Task {
   tasksName: string;
   taskPriority: string;
   taskIsOk: boolean;
-  taskTimeCreate?: string;
-  taskTimeConfirm?: string;
-  taskTimeCancel?: string;
+  taskTimeCreate?: Date;
+  taskTimeConfirm?: Date;
+  taskTimeCancel?: Date;
   //tslint:disable
-  constructor(tasksName: string, taskPriority: string, taskIsOk: boolean, taskTimeCreate?: string, taskTimeConfirm?: string, taskTimeCancel?: string, taskId?: number) {
+  constructor(tasksName: string, taskPriority: string, taskIsOk: boolean, taskTimeCreate?: Date, taskTimeConfirm?: Date, taskTimeCancel?: Date, taskId?: number) {
     this.taskId = taskId;
     this.tasksName = tasksName;
     this.taskPriority = taskPriority;

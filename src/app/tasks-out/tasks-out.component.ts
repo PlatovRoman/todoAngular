@@ -53,14 +53,16 @@ export class TasksOUTComponent implements OnInit {
   private handleTask(task: Task): Task {
     // todo почему даты также нельзя проинициализировать в input? В этом и суть инпута, если уж так делать,
     // todo что в него по максимуму должна быть вынесена логика ввода
-    const time = new Date().toLocaleTimeString('ru-RU', {timeZone: 'Europe/Moscow'});
-    const date = new Date().toLocaleDateString('ru-RU', {timeZone: 'Europe/Moscow'});
+    // todo ну потому что в input даты мы не вводим, они генерируются и выводятся в тут. зачем в input чужая логика?
+   /* const time = new Date().toLocaleTimeString('ru-RU', {timeZone: 'Europe/Moscow'});
+    const date = new Date().toLocaleDateString('ru-RU', {timeZone: 'Europe/Moscow'});*/
     // console.log(time);
     // console.log(date);
     return {
       ...task,
       taskId: this.tasks.length,
-      taskTimeCreate: 'Time: ' + time + '⌚ Date: ' + date,
+      /*taskTimeCreate: 'Time: ' + time + '⌚ Date: ' + date,*/
+      taskTimeCreate: new Date(),
     };
   }
 
@@ -101,9 +103,7 @@ export class TasksOUTComponent implements OnInit {
     this.tasks.forEach((task) => {
       if (task.taskId === id) {
         task.taskIsOk = true;
-        const time = new Date().toLocaleTimeString('ru-RU', {timeZone: 'Europe/Moscow'});
-        const date = new Date().toLocaleDateString('ru-RU', {timeZone: 'Europe/Moscow'});
-        task.taskTimeConfirm = 'TimeConfirm: ' + time + '⌚ Date: ' + date;
+        task.taskTimeConfirm = new Date();
         task.taskTimeCancel = null;
       }
     });
@@ -114,9 +114,7 @@ export class TasksOUTComponent implements OnInit {
     this.tasks.forEach((task) => {
       if (task.taskId === id) {
         task.taskIsOk = false;
-        const time = new Date().toLocaleTimeString('ru-RU', {timeZone: 'Europe/Moscow'});
-        const date = new Date().toLocaleDateString('ru-RU', {timeZone: 'Europe/Moscow'});
-        task.taskTimeCancel = 'TimeCancel: ' + time + '⌚ Date: ' + date;
+        task.taskTimeCancel = new Date();
         task.taskTimeConfirm = null;
       }
     });
