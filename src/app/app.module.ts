@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { TasksOUTComponent } from './tasks-out/tasks-out.component';
 import { TasksINPComponent } from './tasks-inp/tasks-inp.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { EditTaskNameComponent } from './edit-task-name/edit-task-name.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TasksOUTComponent,
-    TasksINPComponent
+    TasksINPComponent,
+    EditTaskNameComponent
   ],
   imports: [
     BrowserModule,

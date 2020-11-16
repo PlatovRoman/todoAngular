@@ -11,10 +11,9 @@
 </p>
 
 <p [formGroup]="FormFilterStat">
-  <input type="checkbox" id="completed" value="completed" (change)="onClickCheck()" formControlName="completed">Complete
-  <input type="checkbox" id="high" value="high" (change)="onClickCheck()" formControlName="high">High
-  <input type="checkbox" id="normal" value="normal" (change)="onClickCheck()" formControlName="normal">Normal
-  <input type="checkbox" id="low" value="low" (change)="onClickCheck()" formControlName="low">Low
-
+  <input type="checkbox" id="completed" formControlName="isCompleted">Complete
+  <input type="checkbox" id="high" formControlName="isHigh">High
+  <input type="checkbox" id="normal" formControlName="isNormal">Normal
+  <input type="checkbox" id="low" formControlName="isLow">Low
   <button id="filterDate" (click)="onClickSort()">Sort by date</button>
 </p>

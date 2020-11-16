@@ -9,10 +9,7 @@ import {FilterStat} from '../filterStat';
   styleUrls: ['./tasks-out.component.css']
 })
 export class TasksOUTComponent implements OnInit {
-  // todo До сих пор не понимаю смысла использования классов при работе с простыми объектами
-  // todo Интерфейс не требует описания конструктора - по сути здесь бесполезного, не требует инициализации через new, что сокращает код
   public tasks: Task[] = [];
-
   public filterStatus: FilterStat = {
     isCompleted: false,
     isHigh: false,
@@ -33,36 +30,24 @@ export class TasksOUTComponent implements OnInit {
     this.dateTrans.task.subscribe((task: Task) => {
       this.tasks.push(this.handleTask(task));
       this.generateTasksFiltered();
-      // console.log(this.tasks);
-      // console.log(this.tasksFiltered);
     });
 
     this.dateTrans.sort.subscribe((sort: boolean) => {
       this.tasksFiltered.reverse();
-      // console.log(this.tasks);
     });
 
     this.dateTrans.filterStat.subscribe((filterStat: FilterStat) => {
       // todo зачем хранить состояние фильтра в отдельной переменной?
       this.filterStatus = filterStat;
+      // todo !!!!!!!!!!!!!!!!!!!!!!!прокинуть(не совсем понимаю, зачем... тогда ломается логика остального)
       this.generateTasksFiltered();
-      // console.log(this.filterStatus);
     });
   }
 
   private handleTask(task: Task): Task {
-    // todo почему даты также нельзя проинициализировать в input? В этом и суть инпута, если уж так делать,
-    // todo что в него по максимуму должна быть вынесена логика ввода
-    // todo ну потому что в input даты мы не вводим, они генерируются и выводятся в тут. зачем в input чужая логика?
-   /* const time = new Date().toLocaleTimeString('ru-RU', {timeZone: 'Europe/Moscow'});
-    const date = new Date().toLocaleDateString('ru-RU', {timeZone: 'Europe/Moscow'});*/
-    // console.log(time);
-    // console.log(date);
     return {
       ...task,
       taskId: this.tasks.length,
-      /*taskTimeCreate: 'Time: ' + time + '⌚ Date: ' + date,*/
-      taskTimeCreate: new Date(),
     };
   }
 
