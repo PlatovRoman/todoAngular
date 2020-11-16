@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Task} from '../task';
-import {FilterStat} from '../filterStat';
 import {DateTransService} from '../date-trans.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 
@@ -10,55 +9,47 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./tasks-inp.component.css']
 })
 export class TasksINPComponent implements OnInit {
-  FormTaskNameAndPtiority: FormGroup = new FormGroup({
+  FormTaskNameAndPriority: FormGroup = new FormGroup({
     taskName: new FormControl('', Validators.required),
     taskPriority: new FormControl('high'),
   });
   FormFilterStat: FormGroup = new FormGroup({
     isCompleted: new FormControl(false),
-    isHigh: new FormControl(false),
-    isNormal: new FormControl(false),
-    isLow: new FormControl(false)
+    high: new FormControl(false),
+    normal: new FormControl(false),
+    low: new FormControl(false)
   });
 
   constructor(private dateTrans: DateTransService) {
   }
 
   ngOnInit(): void {
-    this.FormFilterStat.valueChanges.subscribe((value) => {
-      this.dateTrans.changeFilterStat(value);
+    this.FormFilterStat.valueChanges.subscribe((filterStatus) => {
+      const selectedFilterStatus: string[] = Object.keys(filterStatus).filter((key: string) => filterStatus[key]);
+      this.dateTrans.changeFilterStat(selectedFilterStatus);
     });
   }
 
   public get inputControl(): FormControl {
-    return this.FormTaskNameAndPtiority.get('taskName') as FormControl;
+    return this.FormTaskNameAndPriority.get('taskName') as FormControl;
   }
 
   public onClickAdd(): void {
     let help = false;
-    if (!this.FormFilterStat.get('isCompleted').value) {
-      if (this.FormFilterStat.get('isHigh').value && (this.FormTaskNameAndPtiority.get('taskPriority').value === 'high')) {
-        help = true;
-      }
-      if (this.FormFilterStat.get('isNormal').value && (this.FormTaskNameAndPtiority.get('taskPriority').value === 'normal')) {
-        help = true;
-      }
-      if (this.FormFilterStat.get('isLow').value && (this.FormTaskNameAndPtiority.get('taskPriority').value === 'low')) {
-        help = true;
-      }
-      if (!(this.FormFilterStat.get('isHigh').value || this.FormFilterStat.get('isNormal') || this.FormFilterStat.get('isLow'))) {
-        help = true;
-      }
+    const selectedFilterStatus: string[] = Object.keys(this.FormFilterStat.value).filter((key: string) => this.FormFilterStat.value[key]);
+    if (selectedFilterStatus.includes(this.FormTaskNameAndPriority.get('taskPriority').value) || (selectedFilterStatus.length === 0)){
+      help = true;
     }
+
     const task: Task = {
-      tasksName: this.FormTaskNameAndPtiority.get('taskName').value,
-      taskPriority: this.FormTaskNameAndPtiority.get('taskPriority').value,
+      tasksName: this.FormTaskNameAndPriority.get('taskName').value,
+      taskPriority: this.FormTaskNameAndPriority.get('taskPriority').value,
       taskIsOk: false,
       taskTimeCreate: new Date(),
-      taskVisible: help,
+      taskVisible: help
     };
     this.dateTrans.addTask(task);
-    this.FormTaskNameAndPtiority.get('taskName').reset('');
+    this.FormTaskNameAndPriority.get('taskName').reset('');
   }
 
   public onClickSort(): void {

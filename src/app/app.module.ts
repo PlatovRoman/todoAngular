@@ -6,6 +6,7 @@ import { TasksOUTComponent } from './tasks-out/tasks-out.component';
 import { TasksINPComponent } from './tasks-inp/tasks-inp.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { EditTaskNameComponent } from './edit-task-name/edit-task-name.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { EditTaskNameComponent } from './edit-task-name/edit-task-name.component
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

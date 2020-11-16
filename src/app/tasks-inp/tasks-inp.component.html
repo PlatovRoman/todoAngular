@@ -1,4 +1,4 @@
-<p [formGroup]="FormTaskNameAndPtiority">
+<p [formGroup]="FormTaskNameAndPriority">
   <input type="text" size="47" formControlName="taskName" placeholder="Add new task..." id="input" autofocus>
 
   <select id="slt" formControlName="taskPriority">
@@ -12,8 +12,8 @@
 
 <p [formGroup]="FormFilterStat">
   <input type="checkbox" id="completed" formControlName="isCompleted">Complete
-  <input type="checkbox" id="high" formControlName="isHigh">High
-  <input type="checkbox" id="normal" formControlName="isNormal">Normal
-  <input type="checkbox" id="low" formControlName="isLow">Low
+  <input type="checkbox" id="high" formControlName="high">High
+  <input type="checkbox" id="normal" formControlName="normal">Normal
+  <input type="checkbox" id="low" formControlName="low">Low
   <button id="filterDate" (click)="onClickSort()">Sort by date</button>
 </p>

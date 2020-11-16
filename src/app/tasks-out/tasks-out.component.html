@@ -1,6 +1,6 @@
 <h2>My Tasks</h2>
 <ul>
-  <div id="out" class="div" *ngFor="let task of tasks">
+  <div id="out" *ngFor="let task of tasks">
   <li *ngIf="task.taskVisible">
     {{task.taskPriority | uppercase}} {{task.tasksName}} Create: {{ task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm' }}
     <p *ngIf="task.taskTimeConfirm">
@@ -10,9 +10,9 @@
       Cancel: {{task.taskTimeCancel | date: 'dd.MMM.yyyy, HH:mm' }}
     </p>
     <p>
-    <button id="ok" (click)="onClickOk(task.taskId)">OK</button>
-    <button id="no" (click)="onClickNo(task.taskId)">NO</button>
-    <button id="delete" (click)="onClickDelete(task.taskId)">DELETE</button>
+    <button (click)="onClickOk(task.taskId)">OK</button>
+    <button (click)="onClickNo(task.taskId)">NO</button>
+    <button (click)="onClickDelete(task.taskId)">DELETE</button>
     </p>
   </li>
   </div>

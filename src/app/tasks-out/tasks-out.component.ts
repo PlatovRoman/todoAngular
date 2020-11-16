@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DateTransService} from '../date-trans.service';
 import {Task} from '../task';
-import {FilterStat} from '../filterStat';
 
 @Component({
   selector: 'app-tasks-out',
@@ -10,12 +9,6 @@ import {FilterStat} from '../filterStat';
 })
 export class TasksOUTComponent implements OnInit {
   public tasks: Task[] = [];
-  public filterStatus: FilterStat = {
-    isCompleted: false,
-    isHigh: false,
-    isNormal: false,
-    isLow: false
-  };
 
   constructor(private dateTrans: DateTransService) {
   }
@@ -30,80 +23,24 @@ export class TasksOUTComponent implements OnInit {
       this.tasks.reverse();
     });
 
-    this.dateTrans.filterStat.subscribe((filterStat: FilterStat) => {
+    this.dateTrans.filterStat.subscribe((filterStat: string[]) => {
       this.tasks.forEach((task) => {
         task.taskVisible = false;
-        if (filterStat.isCompleted) {
-          if (task.taskIsOk && task.taskPriority === 'high' && filterStat.isHigh) {
-            task.taskVisible = true;
-          }
-          if (task.taskIsOk && task.taskPriority === 'normal' && filterStat.isNormal) {
-            task.taskVisible = true;
-          }
-          if (task.taskIsOk && task.taskPriority === 'low' && filterStat.isLow) {
-            task.taskVisible = true;
-          }
-          if (task.taskIsOk && !(filterStat.isHigh || filterStat.isNormal || filterStat.isLow)) {
-            task.taskVisible = true;
-          }
-        } else {
-          if (task.taskPriority === 'high' && filterStat.isHigh) {
-            task.taskVisible = true;
-          }
-          if (task.taskPriority === 'normal' && filterStat.isNormal) {
-            task.taskVisible = true;
-          }
-          if (task.taskPriority === 'low' && filterStat.isLow) {
-            task.taskVisible = true;
-          }
-          if (!(filterStat.isHigh || filterStat.isNormal || filterStat.isLow)) {
-            task.taskVisible = true;
-          }
+        if (filterStat.includes('isCompleted')){
+          task.taskVisible = ((filterStat.includes(task.taskPriority) && task.taskIsOk) || (task.taskIsOk && (filterStat.length === 1)));
+        } else if (filterStat.includes(task.taskPriority) || (filterStat.length === 0)){
+          task.taskVisible = true;
         }
-      });
-      console.log(this.tasks);
-    });
+  });
+  });
   }
 
   private handleTask(task: Task): Task {
     return {
       ...task,
       taskId: this.tasks.length,
-     // taskVisible: this.generateTasksFiltered(this.filterStatus),
     };
   }
-
-  /*public generateTasksFiltered(filterStat: FilterStat): void {
-    this.tasks.forEach((task) => {
-      if (filterStat.isCompleted) {
-        if (task.taskIsOk && task.taskPriority === 'high' && filterStat.isHigh) {
-          task.taskVisible = true;
-        }
-        if (task.taskIsOk && task.taskPriority === 'normal' && filterStat.isNormal) {
-          task.taskVisible = true;
-        }
-        if (task.taskIsOk && task.taskPriority === 'low' && filterStat.isLow) {
-          task.taskVisible = true;
-        }
-        if (task.taskIsOk && !(filterStat.isHigh || filterStat.isNormal || filterStat.isLow)) {
-          task.taskVisible = true;
-        }
-      } else {
-        if (task.taskPriority === 'high' && filterStat.isHigh) {
-          task.taskVisible = true;
-        }
-        if (task.taskPriority === 'normal' && filterStat.isNormal) {
-          task.taskVisible = true;
-        }
-        if (task.taskPriority === 'low' && filterStat.isLow) {
-          task.taskVisible = true;
-        }
-        if (!(filterStat.isHigh || filterStat.isNormal || filterStat.isLow)) {
-          task.taskVisible = true;
-        }
-      }
-    });
-  }*/
 
   public onClickOk(id: number): void {
     this.tasks.forEach((task) => {
@@ -113,7 +50,6 @@ export class TasksOUTComponent implements OnInit {
         task.taskTimeCancel = null;
       }
     });
-    //this.generateTasksFiltered();
   }
 
   public onClickNo(id: number): void {
@@ -124,7 +60,6 @@ export class TasksOUTComponent implements OnInit {
         task.taskTimeConfirm = null;
       }
     });
-   // this.generateTasksFiltered();
   }
 
   public onClickDelete(id: number): void {
@@ -133,6 +68,5 @@ export class TasksOUTComponent implements OnInit {
         this.tasks.splice(index, 1);
       }
     });
-   // this.generateTasksFiltered();
   }
 }
