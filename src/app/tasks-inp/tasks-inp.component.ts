@@ -57,9 +57,6 @@ export class TasksINPComponent implements OnInit {
       taskTimeCreate: new Date(),
       taskVisible: help,
     };
-
-    console.log(task);
-
     this.dateTrans.addTask(task);
     this.FormTaskNameAndPtiority.get('taskName').reset('');
   }

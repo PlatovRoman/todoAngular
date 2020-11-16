@@ -61,6 +61,7 @@ export class TasksOUTComponent implements OnInit {
           }
         }
       });
+      console.log(this.tasks);
     });
   }
 
