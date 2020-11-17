@@ -35,18 +35,18 @@ export class TasksINPComponent implements OnInit {
   }
 
   public onClickAdd(): void {
-    let help = false;
+    let helpVisible = false;
     const selectedFilterStatus: string[] = Object.keys(this.FormFilterStat.value).filter((key: string) => this.FormFilterStat.value[key]);
     if (selectedFilterStatus.includes(this.FormTaskNameAndPriority.get('taskPriority').value) || (selectedFilterStatus.length === 0)){
-      help = true;
+      helpVisible = true;
     }
 
     const task: Task = {
-      tasksName: this.FormTaskNameAndPriority.get('taskName').value,
+      taskName: this.FormTaskNameAndPriority.get('taskName').value,
       taskPriority: this.FormTaskNameAndPriority.get('taskPriority').value,
       taskIsOk: false,
       taskTimeCreate: new Date(),
-      taskVisible: help
+      taskVisible: helpVisible
     };
     this.dateTrans.addTask(task);
     this.FormTaskNameAndPriority.get('taskName').reset('');

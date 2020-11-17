@@ -1,1 +1,12 @@
-<p routerLink="" routerLinkActive="active">Оуууууу ееее</p>
+<h2>Edit Task</h2>
+<l1 [formGroup]="EditTask">
+<p>Task Priority</p>
+<p formControlName="Priority">{{this.task.taskPriority}}</p>
+<input type="text" size="47" placeholder=" "  formControlName="Name" autofocus>
+<p>Date Create: </p>
+<p formControlName="Date"></p>
+<p>
+  <button routerLink="" routerLinkActive="active" (click)="onClickSaveEdit()">Save Edit</button>
+  <button routerLink="" routerLinkActive="active">Back without saving</button>
+</p>
+</l1>

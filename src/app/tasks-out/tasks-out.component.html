@@ -2,7 +2,7 @@
 <ul>
   <div id="out" *ngFor="let task of tasks">
   <li *ngIf="task.taskVisible">
-    {{task.taskPriority | uppercase}} {{task.tasksName}} Create: {{ task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm' }}
+    {{task.taskPriority | uppercase}} {{task.taskName}} Create: {{ task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm' }}
     <p *ngIf="task.taskTimeConfirm">
       Confirm: {{task.taskTimeConfirm | date: 'dd.MMM.yyyy, HH:mm' }}
     </p>
@@ -12,6 +12,7 @@
     <p>
     <button (click)="onClickOk(task.taskId)">OK</button>
     <button (click)="onClickNo(task.taskId)">NO</button>
+    <button (click)="onClickEdit(task.taskId)" routerLink="/edit" routerLinkActive="active">Edit</button>
     <button (click)="onClickDelete(task.taskId)">DELETE</button>
     </p>
   </li>

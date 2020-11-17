@@ -1,6 +1,6 @@
 export interface Task {
   taskId?: number;
-  tasksName: string;
+  taskName: string;
   taskPriority: string;
   taskIsOk: boolean;
   taskVisible: boolean;
