@@ -12,23 +12,16 @@ export class EditTaskNameComponent implements OnInit {
   public task: Task;
 
   EditTask: FormGroup = new FormGroup({
-    Priority: new FormControl(),
     Name: new FormControl(),
-    Date: new FormControl(),
   });
 
   constructor(private dateTrans: DateTransService) {
   }
+
   ngOnInit(): void {
     this.dateTrans.clickTaskEdit.subscribe((task: Task) => {
       this.task = task;
-      this.EditTask.setValue({
-        Priority: this.task.taskPriority,
-        Name: this.task.taskName,
-        Date: this.task.taskTimeCreate,
-      });
-     // this.EditTask.get('Priority').patchValue(task.taskPriority);
-     // alert(this.task.taskPriority);
+      this.EditTask.get('Name').setValue(task.taskName);
     });
   }
 

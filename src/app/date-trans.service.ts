@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Task} from './task';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,8 @@ export class DateTransService {
   public task = new Subject<Task>();
   public sort = new Subject<boolean>();
   public filterStat = new Subject<string[]>();
-  public clickTaskEdit = new Subject<Task>();
-  public clickSaveEdit = new Subject<Task>();
+  public clickTaskEdit: BehaviorSubject<any> = new BehaviorSubject(null);
+  public clickSaveEdit: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() {
   }

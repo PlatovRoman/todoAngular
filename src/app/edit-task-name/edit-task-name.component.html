@@ -1,10 +1,20 @@
 <h2>Edit Task</h2>
 <l1 [formGroup]="EditTask">
 <p>Task Priority</p>
-<p formControlName="Priority">{{this.task.taskPriority}}</p>
-<input type="text" size="47" placeholder=" "  formControlName="Name" autofocus>
-<p>Date Create: </p>
-<p formControlName="Date"></p>
+<p>{{task.taskPriority}}</p>
+<input type="text" size="47" formControlName="Name" autofocus>
+<p>
+  Date Create:
+  {{task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm'}}
+</p>
+<p *ngIf="task.taskTimeConfirm">
+  Date Confirm:
+  {{task.taskTimeConfirm | date: 'dd.MMM.yyyy, HH:mm'}}
+</p>
+<p *ngIf="task.taskTimeCancel">
+  Date Cancel:
+  {{task.taskTimeCancel | date: 'dd.MMM.yyyy, HH:mm'}}
+</p>
 <p>
   <button routerLink="" routerLinkActive="active" (click)="onClickSaveEdit()">Save Edit</button>
   <button routerLink="" routerLinkActive="active">Back without saving</button>
