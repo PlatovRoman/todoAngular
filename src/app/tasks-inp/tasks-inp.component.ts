@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Task} from '../task';
 import {DateTransService} from '../date-trans.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {HttpService} from '../http.service';
 
 @Component({
   selector: 'app-tasks-inp',
@@ -20,7 +21,7 @@ export class TasksINPComponent implements OnInit {
     low: new FormControl(false)
   });
 
-  constructor(private dateTrans: DateTransService) {
+  constructor(private dateTrans: DateTransService, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -49,6 +50,10 @@ export class TasksINPComponent implements OnInit {
       taskVisible: helpVisible
     };
     this.dateTrans.addTask(task);
+
+    // ну тип отправили блять /////////////////////////////////////////
+    this.httpService.postData(task);
+
     this.FormTaskNameAndPriority.get('taskName').reset('');
   }
 

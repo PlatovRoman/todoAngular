@@ -8,6 +8,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { EditTaskNameComponent } from './edit-task-name/edit-task-name.component';
 import { AppRoutingModule } from './app-routing.module';
 import {Routes, RouterModule} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
 
 const appRoutes: Routes = [
   { path: '', component: TasksOUTComponent},
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

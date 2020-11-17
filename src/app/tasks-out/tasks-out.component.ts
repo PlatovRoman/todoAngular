@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DateTransService} from '../date-trans.service';
 import {Task} from '../task';
+import {HttpService} from '../http.service';
 
 @Component({
   selector: 'app-tasks-out',
@@ -10,10 +11,13 @@ import {Task} from '../task';
 export class TasksOUTComponent implements OnInit {
   public tasks: Task[] = [];
   public filterStat: string[] = [];
-  constructor(private dateTrans: DateTransService) {
+  constructor(private dateTrans: DateTransService, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
+    // тип забрал блять ////////////////////////////////////////////////
+    this.httpService.getData().subscribe((data: Task[]) => this.tasks = data);
+
     this.dateTrans.clickSaveEdit.subscribe((task: Task) => {
       this.tasks.forEach((oldTask) => {
         if (oldTask.taskId === task.taskId) {
