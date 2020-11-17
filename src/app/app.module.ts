@@ -7,6 +7,13 @@ import { TasksINPComponent } from './tasks-inp/tasks-inp.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { EditTaskNameComponent } from './edit-task-name/edit-task-name.component';
 import { AppRoutingModule } from './app-routing.module';
+import {Routes, RouterModule} from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: '', component: TasksOUTComponent},
+  { path: 'edit', component: EditTaskNameComponent},
+  { path: '**', redirectTo: '/' }
+];
 
 @NgModule({
   declarations: [
@@ -19,9 +26,11 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
