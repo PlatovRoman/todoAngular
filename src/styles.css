@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+html{
+  cursor: url(images/curs.cur), pointer;
+}
+body {
+  text-align: center;
+  background: #d9d0ff;
+  color: #000000;
+}

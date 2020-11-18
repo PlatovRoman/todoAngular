@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {DateTransService} from '../date-trans.service';
 import {Task} from '../task';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
@@ -8,7 +8,7 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
   templateUrl: './edit-task-name.component.html',
   styleUrls: ['./edit-task-name.component.css']
 })
-export class EditTaskNameComponent implements OnInit {
+export class EditTaskNameComponent implements OnInit, OnDestroy {
   public task: Task;
 
   EditTask: FormGroup = new FormGroup({
@@ -28,5 +28,9 @@ export class EditTaskNameComponent implements OnInit {
   public onClickSaveEdit(): void {
     this.task.taskName = this.EditTask.get('Name').value;
     this.dateTrans.clickSave(this.task);
+  }
+
+  ngOnDestroy(): void {
+    this.dateTrans.clickTaskEdit.unsubscribe();
   }
 }

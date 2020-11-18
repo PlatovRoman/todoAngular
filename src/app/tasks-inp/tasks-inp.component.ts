@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Task} from '../task';
 import {DateTransService} from '../date-trans.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
@@ -9,7 +9,7 @@ import {HttpService} from '../http.service';
   templateUrl: './tasks-inp.component.html',
   styleUrls: ['./tasks-inp.component.css']
 })
-export class TasksINPComponent implements OnInit {
+export class TasksINPComponent implements OnInit, OnDestroy {
   FormTaskNameAndPriority: FormGroup = new FormGroup({
     taskName: new FormControl('', Validators.required),
     taskPriority: new FormControl('high'),
@@ -51,13 +51,17 @@ export class TasksINPComponent implements OnInit {
     };
     this.dateTrans.addTask(task);
 
-    // ну тип отправили блять /////////////////////////////////////////
+  /*  // ну тип отправили блять /////////////////////////////////////////
     this.httpService.postData(task);
-
+*/
     this.FormTaskNameAndPriority.get('taskName').reset('');
   }
 
   public onClickSort(): void {
     this.dateTrans.clickSort(true);
+  }
+
+  ngOnDestroy(): void {
+   // this.FormFilterStat.valueChanges.unsubscribe();
   }
 }

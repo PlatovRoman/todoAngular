@@ -1,19 +1,18 @@
 <p [formGroup]="FormTaskNameAndPriority">
-  <input type="text" size="47" formControlName="taskName" placeholder="Add new task..." id="input" autofocus>
+  <input class="fon" type="text" size="47" formControlName="taskName" placeholder="Add new task..." id="input" autofocus>
 
-  <select id="slt" formControlName="taskPriority">
-    <option value="high">High</option>
-    <option value="normal">Normal</option>
-    <option value="low">Low</option>
+  <select class="fon" id="slt" formControlName="taskPriority">
+    <option value="high">🌕High</option>
+    <option value="normal">🌓Normal</option>
+    <option value="low">🌑Low</option>
   </select>
 
-  <button id="add" [disabled]="!inputControl.valid" (click)="onClickAdd()">Add</button>
+  <button class="fon" id="add" [disabled]="!inputControl.valid" (click)="onClickAdd()">➕Add</button>
 </p>
-
 <p [formGroup]="FormFilterStat">
-  <input type="checkbox" id="completed" formControlName="isCompleted">Complete
-  <input type="checkbox" id="high" formControlName="high">High
-  <input type="checkbox" id="normal" formControlName="normal">Normal
-  <input type="checkbox" id="low" formControlName="low">Low
-  <button id="filterDate" (click)="onClickSort()">Sort by date</button>
+  <input class="fon" type="checkbox" id="completed" formControlName="isCompleted"><font  face="cursive">Complete</font>
+  <input class="fon" type="checkbox" id="high" formControlName="high"><font  face="cursive">🌕High</font>
+  <input class="fon" type="checkbox" id="normal" formControlName="normal"><font  face="cursive">🌓Normal</font>
+  <input class="fon" type="checkbox" id="low" formControlName="low"><font  face="cursive">🌑Low</font>
+  <button class="fon" id="filterDate" (click)="onClickSort()">⟳Sort by date</button>
 </p>

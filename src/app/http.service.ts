@@ -9,8 +9,12 @@ import {Observable} from 'rxjs';
 export class HttpService {
 
   constructor(private http: HttpClient) { }
-// хуйня нерабочая бля /////////////////////////////////////////////////////
-  getData(): Observable<any>{
+  getData() {
+    return this.http.get('user.json');
+  }
+
+  // хуйня нерабочая бля /////////////////////////////////////////////////////
+ /* getData(): Observable<any>{
     return this.http.get('http://127.0.0.1:3000/items');
   }
 
@@ -26,7 +30,7 @@ export class HttpService {
       taskTimeCancel: task.taskTimeCancel
     };
     return this.http.post('http://127.0.0.1:3000/items', body);
-  }
+  }*/
 
 /*  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //(GET)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

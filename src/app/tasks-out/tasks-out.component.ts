@@ -1,23 +1,32 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {DateTransService} from '../date-trans.service';
 import {Task} from '../task';
 import {HttpService} from '../http.service';
+import { HttpClient } from '@angular/common/http';
+import {User} from './user';
 
 @Component({
   selector: 'app-tasks-out',
   templateUrl: './tasks-out.component.html',
-  styleUrls: ['./tasks-out.component.css']
+  styleUrls: ['./tasks-out.component.css'],
+  // хз надо это или нет
+  /*providers: [HttpService],*/
 })
-export class TasksOUTComponent implements OnInit {
+export class TasksOUTComponent implements OnInit, OnDestroy {
   public tasks: Task[] = [];
   public filterStat: string[] = [];
-  constructor(private dateTrans: DateTransService, private httpService: HttpService) {
+  constructor(private dateTrans: DateTransService, private httpService: HttpService, private http: HttpClient) {
   }
 
+  /*user: User[] = [];*/
   ngOnInit(): void {
     // тип забрал блять ////////////////////////////////////////////////
-    this.httpService.getData().subscribe((data: Task[]) => this.tasks = data);
+    // this.httpService.getData().subscribe((data: Task[]) => this.tasks = data);
 
+ /*   this.httpService
+      .getData()
+      .subscribe((data) => (this.user = data['userList']));
+*/
     this.dateTrans.clickSaveEdit.subscribe((task: Task) => {
       this.tasks.forEach((oldTask) => {
         if (oldTask.taskId === task.taskId) {
@@ -89,5 +98,12 @@ export class TasksOUTComponent implements OnInit {
         this.dateTrans.clickEdit(task);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.dateTrans.clickSaveEdit.unsubscribe();
+    this.dateTrans.task.unsubscribe();
+    this.dateTrans.sort.unsubscribe();
+    this.dateTrans.filterStat.unsubscribe();
   }
 }

@@ -1,22 +1,20 @@
-<h2>Edit Task</h2>
-<l1 [formGroup]="EditTask">
-<p>Task Priority</p>
-<p>{{task.taskPriority}}</p>
-<input type="text" size="47" formControlName="Name" autofocus>
+<div  class="div" [formGroup]="EditTask">
+<p><font  face="cursive">🌝Task Priority: {{task.taskPriority}}</font></p>
+<input class="fon" type="text" size="47" formControlName="Name" autofocus>
 <p>
-  Date Create:
+  🙃 Create:
   {{task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm'}}
 </p>
 <p *ngIf="task.taskTimeConfirm">
-  Date Confirm:
+  ✔ Confirm:
   {{task.taskTimeConfirm | date: 'dd.MMM.yyyy, HH:mm'}}
 </p>
 <p *ngIf="task.taskTimeCancel">
-  Date Cancel:
+  ✖ Cancel:
   {{task.taskTimeCancel | date: 'dd.MMM.yyyy, HH:mm'}}
 </p>
 <p>
-  <button routerLink="" routerLinkActive="active" (click)="onClickSaveEdit()">Save Edit</button>
-  <button routerLink="" routerLinkActive="active">Back without saving</button>
+  <button class="btnOK" routerLink="" routerLinkActive="active" (click)="onClickSaveEdit()">💿Save Edit</button>
+  <button class="btnNO" routerLink="" routerLinkActive="active">🚫Back without saving</button>
 </p>
-</l1>
+</div>

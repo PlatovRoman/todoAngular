@@ -1,0 +1,14 @@
+.fon{
+  background: #d9d0ff;
+  border: 5px outset #b5a4f8;
+  border-radius: 10px 10px;
+  box-shadow: 0 0 5px #987aff;
+  cursor: pointer;
+  font-family: cursive;
+}
+.fon:hover{
+  background: #b5a4f8;
+}
+.fon:active {
+  background: #ffffff;
+}

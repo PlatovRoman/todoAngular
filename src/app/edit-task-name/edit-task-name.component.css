@@ -1,0 +1,60 @@
+.fon{
+  background: #d9d0ff;
+  border: 5px outset #b5a4f8;
+  border-radius: 10px 10px;
+  box-shadow: 0 0 5px #987aff;
+  cursor: pointer;
+  font-family: cursive;
+}
+.fon:hover{
+  background: #b5a4f8;
+}
+.fon:active {
+  background: #ffffff;
+}
+.div{
+  border: 4px outset #b5a4f8;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px 10px;
+  box-shadow: 0 0 5px #987aff;
+  font-family: cursive;
+}
+.btnOK{
+  /* background-image: url('/images/ok.svg');
+  width: 150px;
+  height: 150px;*/
+  background: #81f181;
+  border: 4px outset #b5a4f8;
+  border-radius: 10px 10px;
+  box-shadow: 0 0 5px #987aff;
+  cursor: pointer;
+  font-family: cursive;
+}
+
+.btnOK:hover{
+  background: #00ff20;
+}
+.btnOK:active {
+  background: #ffffff;
+}
+
+.btnNO{
+  /* background-image: url('/images/no.svg');
+  width: 150px;
+  height: 150px;*/
+  background: #f3767c;
+  border: 4px outset #b5a4f8;
+  border-radius: 10px 10px;
+  box-shadow: 0 0 5px #987aff;
+  cursor: pointer;
+  font-family: cursive;
+}
+
+.btnNO:hover{
+  background: #ff0009;
+}
+.btnNO:active {
+  background: #ffffff;
+}

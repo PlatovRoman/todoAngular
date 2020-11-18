@@ -1,20 +1,28 @@
-<h2>My Tasks</h2>
-<ul>
-  <div id="out" *ngFor="let task of tasks">
-  <li *ngIf="task.taskVisible">
-    {{task.taskPriority | uppercase}} {{task.taskName}} Create: {{ task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm' }}
+
+<!--
+  <li *ngFor="let user of user">
+    <p>id: {{ user?.id }}</p>
+    <p>name: {{ user?.name }}</p>
+  </li>
+-->
+  <div *ngFor="let task of tasks">
+  <div class="div" *ngIf="task.taskVisible">
+    {{task.taskPriority}}🙃Create: {{ task.taskTimeCreate | date: 'dd.MMM.yyyy, HH:mm' }}
+    <p>
+      {{task.taskName}}
+    </p>
     <p *ngIf="task.taskTimeConfirm">
-      Confirm: {{task.taskTimeConfirm | date: 'dd.MMM.yyyy, HH:mm' }}
+      ✔ Confirm: {{task.taskTimeConfirm | date: 'dd.MMM.yyyy, HH:mm' }}
     </p>
     <p *ngIf="task.taskTimeCancel">
-      Cancel: {{task.taskTimeCancel | date: 'dd.MMM.yyyy, HH:mm' }}
+      ✖ Cancel: {{task.taskTimeCancel | date: 'dd.MMM.yyyy, HH:mm' }}
     </p>
     <p>
-    <button (click)="onClickOk(task.taskId)">OK</button>
-    <button (click)="onClickNo(task.taskId)">NO</button>
-    <button (click)="onClickEdit(task.taskId)" routerLink="/edit" routerLinkActive="active">Edit</button>
-    <button (click)="onClickDelete(task.taskId)">DELETE</button>
+    <button class="btnOK" (click)="onClickOk(task.taskId)">✔</button>
+    <button class="btnNO" (click)="onClickNo(task.taskId)">✖</button>
+    <button class="btnDELETE" (click)="onClickEdit(task.taskId)" routerLink="/edit" routerLinkActive="active">🔧Edit</button>
+    <button class="btnDELETE" (click)="onClickDelete(task.taskId)">🗑DELETE</button>
     </p>
-  </li>
   </div>
-</ul>
+  </div>
+
