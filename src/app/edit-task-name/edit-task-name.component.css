@@ -22,9 +22,6 @@
   font-family: cursive;
 }
 .btnOK{
-  /* background-image: url('/images/ok.svg');
-  width: 150px;
-  height: 150px;*/
   background: #81f181;
   border: 4px outset #b5a4f8;
   border-radius: 10px 10px;
@@ -41,9 +38,6 @@
 }
 
 .btnNO{
-  /* background-image: url('/images/no.svg');
-  width: 150px;
-  height: 150px;*/
   background: #f3767c;
   border: 4px outset #b5a4f8;
   border-radius: 10px 10px;

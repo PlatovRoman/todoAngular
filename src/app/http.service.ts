@@ -1,84 +1,56 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Task} from './task';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  constructor(private http: HttpClient) { }
-  getData() {
-    return this.http.get('user.json');
+  public responseServer: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  constructor(private http: HttpClient) {
   }
 
-  // хуйня нерабочая бля /////////////////////////////////////////////////////
- /* getData(): Observable<any>{
+  public getData(): Observable<any> {
     return this.http.get('http://127.0.0.1:3000/items');
   }
 
-  postData(task: Task): Observable<any>{
-    const body = {
-      taskId: task.taskId,
-      taskName: task.taskName,
-      taskPriority: task.taskPriority,
-      taskIsOk: task.taskIsOk,
-      taskVisible: task.taskVisible,
-      taskTimeCreate: task.taskTimeCreate,
-      taskTimeConfirm: task.taskTimeConfirm,
-      taskTimeCancel: task.taskTimeCancel
-    };
-    return this.http.post('http://127.0.0.1:3000/items', body);
-  }*/
+  public postData(task: Task): void {
+    this.http.post('http://127.0.0.1:3000/items', task)
+      .subscribe((newTask: Task) => this.responseServer.next(newTask));
+  }
+
+  public deleteData(id: number): void {
+    this.http.delete('http://127.0.0.1:3000/items/' + String(id));
+  }
+
+  public putData(id: number, task: Task): void {
+    this.http.put('http://127.0.0.1:3000/items/' + String(id), task);
+  }
+}
 
 /*  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//(GET)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function gettasks() {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://127.0.0.1:3000/items');
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send();
 
-    xhr.onload = function () {
-      tasks = JSON.parse(xhr.response);
-      reloadTasksFiltered();
-      out();
-    };
-  };
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//(POST)////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function posttask(body) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://127.0.0.1:3000/items");
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(body));
-
-    xhr.onload = function() {
-      tasks.push(JSON.parse(xhr.response));
-      reloadTasksFiltered();
-      out();
-    };
-  };
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PUT///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PUT http://127.0.0.1:3000/items/:itemId (обновление элементов)
-function puttask(taskid, task) {
+function puttask(id, task) {
     let xhr = new XMLHttpRequest();
-    xhr.open('PUT', 'http://127.0.0.1:3000/items/' + String(taskid));
+    xhr.open('PUT', 'http://127.0.0.1:3000/items/' + String(id));
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(task));
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //DELETE////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function deletetask(taskid) {
+function deletetask(id) {
     let xhr = new XMLHttpRequest();
-    xhr.open('DELETE', 'http://127.0.0.1:3000/items/' + String(taskid));
+    xhr.open('DELETE', 'http://127.0.0.1:3000/items/' + String(id));
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send();
 
     tasks.forEach((param, i) => {
-        if (param.id === taskid) {
+        if (param.id === id) {
             tasks.splice(i, 1);
         }
     })
@@ -88,27 +60,4 @@ function deletetask(taskid) {
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 */
-/*
-  putTask(taskId: number, task: Task) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('PUT', 'http://127.0.0.1:3000/items/' + String(taskId));
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(task));
-  };
 
-  deleteTask(taskId: number) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('DELETE', 'http://127.0.0.1:3000/items/' + String(taskId));
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send();
-
-    tasks.forEach((param, i) => {
-      if (param.id === taskid) {
-        tasks.splice(i, 1);
-      }
-    })
-
-    reloadTasksFiltered();
-    out();
-  }*/
-}

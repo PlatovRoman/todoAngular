@@ -1,5 +1,5 @@
 export interface Task {
-  taskId?: number;
+  id?: number;
   taskName: string;
   taskPriority: string;
   taskIsOk: boolean;

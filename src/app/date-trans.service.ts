@@ -7,17 +7,12 @@ import {BehaviorSubject, Subject} from 'rxjs';
 })
 export class DateTransService {
 
-  public task = new Subject<Task>();
   public sort = new Subject<boolean>();
   public filterStat = new Subject<string[]>();
   public clickTaskEdit: BehaviorSubject<any> = new BehaviorSubject(null);
   public clickSaveEdit: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() {
-  }
-
-  public addTask(task: Task): void {
-    this.task.next(task);
   }
 
   public clickSort(sort: boolean): void {

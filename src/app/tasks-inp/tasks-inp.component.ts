@@ -3,6 +3,8 @@ import {Task} from '../task';
 import {DateTransService} from '../date-trans.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {HttpService} from '../http.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks-inp',
@@ -10,6 +12,8 @@ import {HttpService} from '../http.service';
   styleUrls: ['./tasks-inp.component.css']
 })
 export class TasksINPComponent implements OnInit, OnDestroy {
+  public unsub$$: Subject<any> = new Subject();
+
   FormTaskNameAndPriority: FormGroup = new FormGroup({
     taskName: new FormControl('', Validators.required),
     taskPriority: new FormControl('high'),
@@ -25,7 +29,9 @@ export class TasksINPComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.FormFilterStat.valueChanges.subscribe((filterStatus) => {
+    this.FormFilterStat.valueChanges
+      .pipe(takeUntil(this.unsub$$))
+      .subscribe((filterStatus) => {
       const selectedFilterStatus: string[] = Object.keys(filterStatus).filter((key: string) => filterStatus[key]);
       this.dateTrans.changeFilterStat(selectedFilterStatus);
     });
@@ -49,11 +55,9 @@ export class TasksINPComponent implements OnInit, OnDestroy {
       taskTimeCreate: new Date(),
       taskVisible: helpVisible
     };
-    this.dateTrans.addTask(task);
 
-  /*  // ну тип отправили блять /////////////////////////////////////////
     this.httpService.postData(task);
-*/
+
     this.FormTaskNameAndPriority.get('taskName').reset('');
   }
 
@@ -62,6 +66,7 @@ export class TasksINPComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   // this.FormFilterStat.valueChanges.unsubscribe();
+    this.unsub$$.next();
+    this.unsub$$.complete();
   }
 }
