@@ -8,7 +8,7 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
   templateUrl: './edit-task-name.component.html',
   styleUrls: ['./edit-task-name.component.css']
 })
-export class EditTaskNameComponent implements OnInit, OnDestroy {
+export class EditTaskNameComponent implements OnInit {// , OnDestroy
   public task: Task;
 
   EditTask: FormGroup = new FormGroup({
@@ -30,7 +30,7 @@ export class EditTaskNameComponent implements OnInit, OnDestroy {
     this.dateTrans.clickSave(this.task);
   }
 
-  ngOnDestroy(): void {
+  /*ngOnDestroy(): void {
     this.dateTrans.clickTaskEdit.unsubscribe();
-  }
+  }*/
 }
