@@ -7,7 +7,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-
+  // todo получше назвать переменную, не ясно, что конкретно в ней лежит
   public responseServer: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) {

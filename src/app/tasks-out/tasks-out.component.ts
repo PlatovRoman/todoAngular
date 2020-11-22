@@ -3,6 +3,8 @@ import {DateTransService} from '../date-trans.service';
 import {Task} from '../task';
 import {HttpService} from '../http.service';
 import {HttpClient} from '@angular/common/http';
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-tasks-out',
@@ -10,16 +12,14 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./tasks-out.component.css'],
 
 })
-export class TasksOUTComponent implements OnInit {// , OnDestroy
+export class TasksOUTComponent implements OnInit /*OnDestroy*/ {
   public tasks: Task[] = [];
   public filterStat: string[] = [];
-
   constructor(private dateTrans: DateTransService, private httpService: HttpService, private http: HttpClient) {
   }
 
   ngOnInit(): void {
     this.httpService.getData().subscribe((data: Task[]) => this.tasks = data);
-
     this.httpService.responseServer.subscribe((newTask: Task) => {
       if (newTask != null) {
         this.tasks.push(newTask);
@@ -41,7 +41,7 @@ export class TasksOUTComponent implements OnInit {// , OnDestroy
         }
       });
     });
-
+    // todo бестолковая ненужная подписка
     this.dateTrans.clickSaveEdit.subscribe((task: Task) => {
       this.tasks.forEach((oldTask) => {
         if (oldTask.id === task.id) {
@@ -92,9 +92,11 @@ export class TasksOUTComponent implements OnInit {// , OnDestroy
     });
   }
 
-  /*ngOnDestroy(): void {
-    this.dateTrans.clickSaveEdit.unsubscribe();
+ /* ngOnDestroy(): void {
+    // todo проверил догадку с разрушением Subject'ов после unsubscribe
+    // todo создать, где необходимо дублирующие Observable и работать в компоненте уже с ними
+    /!*this.dateTrans.clickSaveEdit.unsubscribe();
     this.dateTrans.sort.unsubscribe();
-    this.dateTrans.filterStat.unsubscribe();
+    this.dateTrans.filterStat.unsubscribe();*!/
   }*/
 }
