@@ -2,37 +2,40 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {DateTransService} from '../date-trans.service';
 import {Task} from '../task';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {HttpService} from "../http.service";
+import {HttpService} from '../http.service';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-edit-task-name',
   templateUrl: './edit-task-name.component.html',
   styleUrls: ['./edit-task-name.component.css']
 })
-export class EditTaskNameComponent implements OnInit/*OnDestroy*/ {
+export class EditTaskNameComponent implements OnInit, OnDestroy {
   public task: Task;
+  public unsub$$: Subject<any> = new Subject();
 
   EditTask: FormGroup = new FormGroup({
     Name: new FormControl(),
   });
 
-  constructor(private dateTrans: DateTransService) {
+  constructor(private dateTrans: DateTransService, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
-    this.dateTrans.clickTaskEdit.subscribe((task: Task) => {
+    this.dateTrans.clickTaskEdit$.pipe(takeUntil(this.unsub$$)).subscribe((task: Task) => {
       this.task = task;
       this.EditTask.get('Name').setValue(task.taskName);
     });
   }
 
   public onClickSaveEdit(): void {
-    // todo редактирование обрабатывается с использованием избыточной переменной clickSaveEdit и функции clickSave
     this.task.taskName = this.EditTask.get('Name').value;
-    this.dateTrans.clickSave(this.task);
+    this.httpService.putData(this.task.id, this.task);
   }
 
-  /*ngOnDestroy(): void {
-    this.dateTrans.clickTaskEdit.unsubscribe();
-  }*/
+  ngOnDestroy(): void {
+    this.unsub$$.next();
+    this.unsub$$.complete();
+  }
 }

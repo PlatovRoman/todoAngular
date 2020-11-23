@@ -7,8 +7,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  // todo получше назвать переменную, не ясно, что конкретно в ней лежит
-  public responseServer: BehaviorSubject<any> = new BehaviorSubject(null);
+  public responseServerNewTask$$: BehaviorSubject<Task> = new BehaviorSubject(null);
+  public responseServerNewTask$: Observable<Task> = this.responseServerNewTask$$.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -19,7 +19,7 @@ export class HttpService {
 
   public postData(task: Task): void {
     this.http.post('http://127.0.0.1:3000/items', task)
-      .toPromise().then((newTask: Task) => this.responseServer.next(newTask));
+      .toPromise().then((newTask: Task) => this.responseServerNewTask$$.next(newTask));
   }
 
   public deleteData(id: number): void {

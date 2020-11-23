@@ -6,28 +6,27 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class DateTransService {
+  public sort$$: Subject<boolean> = new Subject<boolean>();
+  public sort$: Observable<boolean> = this.sort$$.asObservable();
 
-  public sort = new Subject<boolean>();
-  public filterStat = new Subject<string[]>();
-  public clickTaskEdit: BehaviorSubject<any> = new BehaviorSubject(null);
-  public clickSaveEdit: BehaviorSubject<any> = new BehaviorSubject(null);
+  public filterStat$$: Subject<string[]> = new Subject<string[]>();
+  public filterStat$: Observable<string[]> = this.filterStat$$.asObservable();
+
+  public clickTaskEdit$$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public clickTaskEdit$: Observable<Task> = this.clickTaskEdit$$.asObservable();
 
   constructor() {
   }
 
   public clickSort(sort: boolean): void {
-    this.sort.next(sort);
+    this.sort$$.next(sort);
   }
 
   public changeFilterStat(filterStat: string[]): void {
-    this.filterStat.next(filterStat);
+    this.filterStat$$.next(filterStat);
   }
 
   public clickEdit(task: Task): void {
-    this.clickTaskEdit.next(task);
-  }
-
-  public clickSave(task: Task): void {
-    this.clickSaveEdit.next(task);
+    this.clickTaskEdit$$.next(task);
   }
 }

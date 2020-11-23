@@ -12,25 +12,26 @@ import {takeUntil} from "rxjs/operators";
   styleUrls: ['./tasks-out.component.css'],
 
 })
-export class TasksOUTComponent implements OnInit /*OnDestroy*/ {
+export class TasksOUTComponent implements OnInit, OnDestroy {
   public tasks: Task[] = [];
   public filterStat: string[] = [];
+  public unsub$$: Subject<any> = new Subject();
   constructor(private dateTrans: DateTransService, private httpService: HttpService, private http: HttpClient) {
   }
 
   ngOnInit(): void {
     this.httpService.getData().subscribe((data: Task[]) => this.tasks = data);
-    this.httpService.responseServer.subscribe((newTask: Task) => {
+    this.httpService.responseServerNewTask$.pipe(takeUntil(this.unsub$$)).subscribe((newTask: Task) => {
       if (newTask != null) {
         this.tasks.push(newTask);
       }
     });
 
-    this.dateTrans.sort.subscribe((sort: boolean) => {
+    this.dateTrans.sort$.pipe(takeUntil(this.unsub$$)).subscribe((sort: boolean) => {
       this.tasks.reverse();
     });
 
-    this.dateTrans.filterStat.subscribe((filterStat: string[]) => {
+    this.dateTrans.filterStat$.pipe(takeUntil(this.unsub$$)).subscribe((filterStat: string[]) => {
       this.filterStat = filterStat;
       this.tasks.forEach((task) => {
         task.taskVisible = false;
@@ -38,15 +39,6 @@ export class TasksOUTComponent implements OnInit /*OnDestroy*/ {
           task.taskVisible = ((filterStat.includes(task.taskPriority) && task.taskIsOk) || (task.taskIsOk && (filterStat.length === 1)));
         } else if (filterStat.includes(task.taskPriority) || (filterStat.length === 0)) {
           task.taskVisible = true;
-        }
-      });
-    });
-    // todo бестолковая ненужная подписка
-    this.dateTrans.clickSaveEdit.subscribe((task: Task) => {
-      this.tasks.forEach((oldTask) => {
-        if (oldTask.id === task.id) {
-          oldTask = task;
-          this.httpService.putData(oldTask.id, task);
         }
       });
     });
@@ -92,11 +84,8 @@ export class TasksOUTComponent implements OnInit /*OnDestroy*/ {
     });
   }
 
- /* ngOnDestroy(): void {
-    // todo проверил догадку с разрушением Subject'ов после unsubscribe
-    // todo создать, где необходимо дублирующие Observable и работать в компоненте уже с ними
-    /!*this.dateTrans.clickSaveEdit.unsubscribe();
-    this.dateTrans.sort.unsubscribe();
-    this.dateTrans.filterStat.unsubscribe();*!/
-  }*/
+  ngOnDestroy(): void {
+    this.unsub$$.next();
+    this.unsub$$.complete();
+  }
 }
